@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三国杀武将性格测试</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #b22222; /* 暗红色，有点三国的感觉 */
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .options label:hover {
+            background-color: #e9e9e9;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #b22222;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #8b1a1a;
+        }
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff8dc;
+            border-left: 5px solid #b22222;
+            display: none; /* 初始隐藏结果 */
+        }
+        #result h2 {
+            margin-top: 0;
+            color: #b22222;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>你最像哪个三国杀武将？</h1>
+    
+    <form id="quizForm">
+        <!-- 第1题 -->
+        <div class="question">
+            <p>1. 面对比你强大的敌人，你的第一反应是？</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="zhangfei"> A. 废话少说，直接冲上去干！</label>
+                <label><input type="radio" name="q1" value="zhugeliang"> B. 冷静分析，寻找敌人的弱点智取。</label>
+                <label><input type="radio" name="q1" value="simayi"> C. 暂避锋芒，默默发育，等他露出破绽。</label>
+                <label><input type="radio" name="q1" value="sunquan"> D. 敌人的敌人就是朋友，赶紧找人结盟。</label>
+            </div>
+        </div>
+
+        <!-- 第2题 -->
+        <div class="question">
+            <p>2. 在一个团队中，你通常扮演什么角色？</p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="caocao"> A. 绝对的领导者，发号施令。</label>
+                <label><input type="radio" name="q2" value="zhaoyun"> B. 靠谱的执行者，指哪打哪，绝不掉链子。</label>
+                <label><input type="radio" name="q2" value="guojia"> C. 军师/智囊，经常提出意想不到的好点子。</label>
+                <label><input type="radio" name="q2" value="liubei"> D. 润滑剂，擅长凝聚人心，让大家团结一致。</label>
+            </div>
+        </div>
+
+        <!-- 第3题 -->
+        <div class="question">
+            <p>3. 你最看重以下哪种品质？</p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="guanyu"> A. 忠诚与义气</label>
+                <label><input type="radio" name="q3" value="caocao"> B. 能力与霸业</label>
+                <label><input type="radio" name="q3" value="zhugeliang"> C. 智慧与谨慎</label>
+                <label><input type="radio" name="q3" value="simayi"> D. 隐忍与最终的胜利</label>
+            </div>
+        </div>
+
+        <button type="button" onclick="calculateResult()">查看测试结果</button>
+    </form>
+
+    <div id="result">
+        <h2>测试结果：</h2>
+        <p id="heroName" style="font-size: 1.5em; font-weight: bold;"></p>
+        <p id="heroDesc"></p>
+    </div>
+</div>
+
+<script>
+    // 这是一个简单的计分逻辑，每个选项对应一个武将的得分
+    function calculateResult() {
+        // 获取表单数据
+        const form = document.getElementById('quizForm');
+        const q1 = form.q1.value;
+        const q2 = form.q2.value;
+        const q3 = form.q3.value;
+
+        // 检查是否所有题目都答了
+        if (!q1 || !q2 || !q3) {
+            alert("请回答完所有问题再提交哦！");
+            return;
+        }
+
+        // 初始化武将得分
+        let scores = {
+            'zhangfei': 0, 'zhugeliang': 0, 'simayi': 0, 'sunquan': 0,
+            'caocao': 0, 'zhaoyun': 0, 'guojia': 0, 'liubei': 0, 'guanyu': 0
+        };
+
+        // 根据选择加分
+        scores[q1]++;
+        scores[q2]++;
+        scores[q3]++;
+
+        // 找出得分最高的武将
+        let maxScore = 0;
+        let topHero = '';
+        for (let hero in scores) {
+            if (scores[hero] > maxScore) {
+                maxScore = scores[hero];
+                topHero = hero;
+            }
+        }
+
+        // 准备结果文案
+        let heroNameText = "";
+        let heroDescText = "";
+
+        // 根据得分最高的武将给出评价 (这里为了简单，把可能出现的最高分武将写出来)
+        switch(topHero) {
+            case 'caocao':
+                heroNameText = "曹操 - 乱世之奸雄";
+                heroDescText = "你充满野心，具备极强的领导力和决断力。为了达成目标，你不拘小节，是天生的霸主。";
+                break;
+            case 'zhugeliang':
+                heroNameText = "诸葛亮 - 迟暮的丞相";
+                heroDescText = "你心思缜密，做事谨慎，喜欢谋定而后动。在团队中你是智慧的化身，总能化险为夷。";
+                break;
+            case 'simayi':
+                heroNameText = "司马懿 - 狼顾之鬼";
+                heroDescText = "你极具耐心，深谙隐忍之道。你不争一时之气，懂得在最合适的时机给出致命一击。";
+                break;
+            case 'zhangfei':
+            case 'zhaoyun':
+            case 'guanyu':
+                heroNameText = "蜀汉猛将 (关羽/张飞/赵云)";
+                heroDescText = "你性格直爽，重情重义，执行力极强。面对困难你从不退缩，是朋友眼中最可靠的伙伴。";
+                break;
+            case 'liubei':
+            case 'sunquan':
+                heroNameText = "刘备/孙权 - 仁德/制衡之主";
+                heroDescText = "你情商极高，擅长处理人际关系。你懂得如何团结周围的人，在复杂的环境中找到平衡点。";
+                break;
+            case 'guojia':
+                heroNameText = "郭嘉 - 奇谋百出";
+                heroDescText = "你思维跳跃，不按常理出牌。你总能看到别人忽略的细节，提出一针见血的奇谋。";
+                break;
+            default:
+                heroNameText = "神秘武将";
+                heroDescText = "你的性格非常独特，融合了多位三国英豪的特点！";
+        }
+
+        // 将结果显示在网页上
+        document.getElementById('heroName').innerText = heroNameText;
+        document.getElementById('heroDesc').innerText = heroDescText;
+        document.getElementById('result').style.display = 'block'; // 显示结果框
+    }
+</script>
+
+</body>
+</html>
