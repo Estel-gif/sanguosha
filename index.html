@@ -7,9 +7,9 @@
     <style>
         body {
             font-family: 'Microsoft YaHei', sans-serif;
-            background-color: #f0f2f5;
+            background-color: #eceff1;
             color: #333;
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -17,59 +17,67 @@
             background-color: white;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            min-height: 350px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            min-height: 400px;
         }
         h1 {
             text-align: center;
-            color: #d32f2f;
-            margin-bottom: 30px;
+            color: #c62828;
+            margin-bottom: 20px;
+            font-size: 1.8em;
         }
         
         .page-step { display: none; }
-        .page-step.active { display: block; animation: fadeIn 0.5s; }
+        .page-step.active { display: block; animation: fadeIn 0.4s ease-in-out; }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .question-title {
             font-weight: bold;
-            font-size: 1.2em;
+            font-size: 1.15em;
             margin-bottom: 20px;
-            line-height: 1.4;
+            line-height: 1.5;
+            color: #2c3e50;
         }
         .options label {
             display: block;
             margin-bottom: 12px;
-            padding: 15px;
-            background-color: #fafafa;
-            border: 2px solid #e0e0e0;
+            padding: 16px;
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
+            line-height: 1.4;
         }
         .options label:hover {
-            background-color: #f5f5f5;
-            border-color: #bdbdbd;
+            background-color: #e3f2fd;
+            border-color: #90caf9;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
         }
         .options input[type="radio"]:checked + span {
             font-weight: bold;
-            color: #d32f2f;
+            color: #c62828;
         }
         
         button {
             display: block;
             width: 100%;
-            padding: 15px;
-            background-color: #d32f2f;
+            padding: 16px;
+            background-color: #c62828;
             color: white;
             border: none;
             border-radius: 8px;
             font-size: 1.2em;
+            font-weight: bold;
             cursor: pointer;
-            margin-top: 25px;
+            margin-top: 30px;
             transition: background-color 0.3s;
         }
         button:hover {
@@ -77,49 +85,55 @@
         }
         
         .error-msg {
-            color: #d32f2f;
-            font-size: 0.9em;
+            color: #c62828;
+            font-size: 0.95em;
             margin-top: 10px;
             display: none;
+            font-weight: bold;
         }
 
         #result { text-align: center; }
-        #result h2 { color: #d32f2f; margin-bottom: 20px; }
+        #result h2 { color: #333; margin-bottom: 15px; font-size: 1.5em; }
+        .hero-name { font-size: 2.2em; font-weight: bold; color: #c62828; margin: 10px 0; }
+        .hero-tag { font-size: 1.2em; color: #d84315; font-weight: bold; margin-bottom: 20px; }
+        .hero-desc { line-height: 1.8; background-color: #fff3e0; padding: 25px; border-radius: 10px; text-align: left; font-size: 1.1em; border-left: 6px solid #ff9800; }
+        
         .progress {
             text-align: right;
-            color: #9e9e9e;
+            color: #7f8c8d;
             font-size: 0.9em;
             margin-bottom: 15px;
             font-weight: bold;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🔥 三国杀操作风格测试</h1>
+    <h1>⚔️ 三国杀一将成名测试</h1>
     
     <form id="quizForm">
         
         <!-- 欢迎页 -->
         <div id="step-0" class="page-step active">
-            <p style="text-align: center; font-size: 1.1em; line-height: 1.8;">
-                在三国杀的战场上，有人喜欢简单粗暴，有人喜欢细致操作。<br>
-                完成这 5 个问题，测测你最适合哪位“阴间”武将！
+            <p style="text-align: center; font-size: 1.15em; line-height: 1.8; margin-top: 40px;">
+                在神仙打架、阴间武将横行的三国杀里，<br>
+                你的打牌风格最契合哪位武将？<br><br>
+                完成以下 7 个灵魂拷问，揭晓你的专属本命！
             </p>
-            <button type="button" onclick="nextStep(0, 1)">开始匹配</button>
+            <button type="button" onclick="nextStep(0, 1)">开始测试</button>
         </div>
 
         <!-- 第1题 -->
         <div id="step-1" class="page-step">
-            <div class="progress">1 / 5</div>
-            <div class="question-title">1. 玩任何游戏时，你最追求哪种快感？</div>
+            <div class="progress">题目 1 / 7</div>
+            <div class="question-title">1. 游戏刚开局，你拿到了主公身份，但手牌很一般，你的第一回合会怎么操作？</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="zhongyu"> <span>A. 极致的微操，用复杂的连招秀翻全场。</span></label>
-                <label><input type="radio" name="q1" value="weilvbu"> <span>B. 简单粗暴，数值碾压，平A即是真理。</span></label>
-                <label><input type="radio" name="q1" value="xuelingyun"> <span>C. 疯狂闪避，看着敌人打不到我气急败坏的样子。</span></label>
-                <label><input type="radio" name="q1" value="mouhuanggai"> <span>D. 刀尖舔血，追求一击必杀的极限爆发。</span></label>
-                <label><input type="radio" name="q1" value="xuyou"> <span>E. 掌控全局，资源无限，我的回合还是我的回合。</span></label>
+                <label><input type="radio" name="q1" value="A"> <span>A. 随便找个看着不顺眼的盲狙一刀，万一盲中了呢！</span></label>
+                <label><input type="radio" name="q1" value="B"> <span>B. 穿上防具，留满手牌直接过。先观察局势，不轻易暴露意图。</span></label>
+                <label><input type="radio" name="q1" value="C"> <span>C. 仔细分析每个人的选将，试探性地乐后置位强将，尽量保留实力。</span></label>
             </div>
             <p id="error-1" class="error-msg">请先选择一个选项哦！</p>
             <button type="button" onclick="nextStep(1, 2)">下一题</button>
@@ -127,44 +141,38 @@
 
         <!-- 第2题 -->
         <div id="step-2" class="page-step">
-            <div class="progress">2 / 5</div>
-            <div class="question-title">2. 面对一个血量很厚的高手，你会怎么打？</div>
+            <div class="progress">题目 2 / 7</div>
+            <div class="question-title">2. 你最享受三国杀里的哪种瞬间？</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="mouhuanggai"> <span>A. 攒满怒气和Buff，找准机会一波带走！</span></label>
-                <label><input type="radio" name="q2" value="xuelingyun"> <span>B. 敌进我退，疯狂拉扯，慢慢把他耗死。</span></label>
-                <label><input type="radio" name="q2" value="zhongyu"> <span>C. 仔细计算他的技能冷却，用细节操作建立优势。</span></label>
-                <label><input type="radio" name="q2" value="weilvbu"> <span>D. 废话少说，直接冲上去硬刚，拼的就是面板属性！</span></label>
-                <label><input type="radio" name="q2" value="xuyou"> <span>E. 利用机制不断刷牌/刷资源，用牌量淹没他。</span></label>
+                <label><input type="radio" name="q2" value="A"> <span>A. 连弩在手，伤害拉满，一回合直接把人秒了。</span></label>
+                <label><input type="radio" name="q2" value="B"> <span>B. 一回合摸几十张牌，疯狂过牌，全场看着我一个人表演。</span></label>
+                <label><input type="radio" name="q2" value="C"> <span>C. 无论对面怎么打，我的防御无懈可击。</span></label>
             </div>
             <p id="error-2" class="error-msg">请先选择一个选项哦！</p>
             <button type="button" onclick="nextStep(2, 3)">下一题</button>
         </div>
 
-        <!-- 第3题 -->
+        <!-- 第3题 (含隐藏触发) -->
         <div id="step-3" class="page-step">
-            <div class="progress">3 / 5</div>
-            <div class="question-title">3. 在团队合作中，你最讨厌遇到什么情况？</div>
+            <div class="progress">题目 3 / 7</div>
+            <div class="question-title">3. 面对三国杀层出不穷的新武将，你的氪金态度是？</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="weilvbu"> <span>A. 队友磨磨唧唧，不敢上去打输出。</span></label>
-                <label><input type="radio" name="q3" value="zhongyu"> <span>B. 队友乱放技能，打断了我的完美连招。</span></label>
-                <label><input type="radio" name="q3" value="xuyou"> <span>C. 资源不够分配，导致我无法尽情发挥。</span></label>
-                <label><input type="radio" name="q3" value="xuelingyun"> <span>D. 队友太脆，导致我失去了拉扯的空间。</span></label>
-                <label><input type="radio" name="q3" value="mouhuanggai"> <span>E. 关键时刻爆发伤害差了一点点，没能秒掉对面。</span></label>
+                <label><input type="radio" name="q3" value="A"> <span>A. 豹子头零氪！白嫖才是最爽的，我用平民将照样暴打土豪。</span></label>
+                <label><input type="radio" name="q3" value="B"> <span>B. 偶尔买个大月卡或者高性价比的武将，微氪怡情。</span></label>
+                <label><input type="radio" name="q3" value="C"> <span>C. 只要武将够强够帅，直接拉满！几万块的武诸葛我来了！</span></label>
             </div>
             <p id="error-3" class="error-msg">请先选择一个选项哦！</p>
             <button type="button" onclick="nextStep(3, 4)">下一题</button>
         </div>
 
-        <!-- 第4题 -->
+        <!-- 第4题 (含隐藏触发) -->
         <div id="step-4" class="page-step">
-            <div class="progress">4 / 5</div>
-            <div class="question-title">4. 如果能拥有一种超能力，你希望是？</div>
+            <div class="progress">题目 4 / 7</div>
+            <div class="question-title">4. 如果游戏注定要输，你在临死前最想做的一件事是？</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="xuelingyun"> <span>A. 绝对闪避（任何攻击都无法触碰你）</span></label>
-                <label><input type="radio" name="q4" value="mouhuanggai"> <span>B. 致命一击（每天一次，无视防御秒杀目标）</span></label>
-                <label><input type="radio" name="q4" value="xuyou"> <span>C. 时间静止（别人动不了，只有你能一直行动）</span></label>
-                <label><input type="radio" name="q4" value="zhongyu"> <span>D. 超级大脑（能瞬间计算出最优解和所有可能性）</span></label>
-                <label><input type="radio" name="q4" value="weilvbu"> <span>E. 钢铁之躯（拥有无坚不摧的力量和防御）</span></label>
+                <label><input type="radio" name="q4" value="A"> <span>A. 将军走此小道，三国杀特有的宁降不死！</span></label>
+                <label><input type="radio" name="q4" value="B"> <span>B. 把好牌（桃、无中生有）全喂给队友，把希望留给他们。</span></label>
+                <label><input type="radio" name="q4" value="C"> <span>C. 疯狂烧条，顺走对面的防具和+1马弃掉。我赢不了，你也别想舒服！</span></label>
             </div>
             <p id="error-4" class="error-msg">请先选择一个选项哦！</p>
             <button type="button" onclick="nextStep(4, 5)">下一题</button>
@@ -172,27 +180,51 @@
 
         <!-- 第5题 -->
         <div id="step-5" class="page-step">
-            <div class="progress">5 / 5</div>
-            <div class="question-title">5. 当你拿到全场MVP（最佳玩家）时，你的内心OS是：</div>
+            <div class="progress">题目 5 / 7</div>
+            <div class="question-title">5. 你残血面对一个满血的强力敌人，你会采取什么策略？</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="xuyou"> <span>A. “看我一个人表演就完事了，牌多就是可以为所欲为。”</span></label>
-                <label><input type="radio" name="q5" value="mouhuanggai"> <span>B. “那一刀的伤害，就问你们爽不爽？！”</span></label>
-                <label><input type="radio" name="q5" value="zhongyu"> <span>C. “基操勿6，全靠细节和脑子。”</span></label>
-                <label><input type="radio" name="q5" value="xuelingyun"> <span>D. “哎呀，你们怎么就是摸不到我呢？真苦恼~”</span></label>
-                <label><input type="radio" name="q5" value="weilvbu"> <span>E. “在绝对的力量面前，一切花里胡哨都是徒劳！”</span></label>
+                <label><input type="radio" name="q5" value="A"> <span>A. 找机会一波爆发反杀，不是你死就是我亡。</span></label>
+                <label><input type="radio" name="q5" value="B"> <span>B. 靠技能慢慢回血拉扯，敌进我退，慢慢折磨对面。</span></label>
+                <label><input type="radio" name="q5" value="C"> <span>C. 听天由命，看能不能神抽一张关键牌逆天改命。</span></label>
             </div>
             <p id="error-5" class="error-msg">请先选择一个选项哦！</p>
-            <button type="button" onclick="calculateResult()">查看我的本命武将</button>
+            <button type="button" onclick="nextStep(5, 6)">下一题</button>
+        </div>
+
+        <!-- 第6题 -->
+        <div id="step-6" class="page-step">
+            <div class="progress">题目 6 / 7</div>
+            <div class="question-title">6. 在团队合作中，你最喜欢什么样的队友？</div>
+            <div class="options">
+                <label><input type="radio" name="q6" value="A"> <span>A. 能给我包养、递牌的纯辅助，让我舒舒服服地C。</span></label>
+                <label><input type="radio" name="q6" value="B"> <span>B. 能跟我打出技能联动的，需要默契配合的队友。</span></label>
+                <label><input type="radio" name="q6" value="C"> <span>C. 队友是什么？冰冷的队友温暖的牌，我一个人能打七个。</span></label>
+            </div>
+            <p id="error-6" class="error-msg">请先选择一个选项哦！</p>
+            <button type="button" onclick="nextStep(6, 7)">下一题</button>
+        </div>
+
+        <!-- 第7题 -->
+        <div id="step-7" class="page-step">
+            <div class="progress">题目 7 / 7</div>
+            <div class="question-title">7. 你最偏爱哪种类型的技能描述？</div>
+            <div class="options">
+                <label><input type="radio" name="q7" value="A"> <span>A. “当你使用【杀】时，伤害+1。” 越短越好，简单粗暴。</span></label>
+                <label><input type="radio" name="q7" value="B"> <span>B. “你可以将一张X牌当Y牌使用...” 灵活多变，考验操作。</span></label>
+                <label><input type="radio" name="q7" value="C"> <span>C. “准备阶段，你可以进行一次判定...” 刺激，全看天意！</span></label>
+            </div>
+            <p id="error-7" class="error-msg">请先选择一个选项哦！</p>
+            <button type="button" onclick="calculateResult()">查看测试结果</button>
         </div>
 
         <!-- 结果页 -->
         <div id="step-result" class="page-step">
             <div id="result">
                 <h2>🎉 你的本命武将是：</h2>
-                <p id="heroName" style="font-size: 2em; font-weight: bold; color: #d32f2f; margin: 15px 0;"></p>
-                <p id="heroTag" style="font-size: 1.2em; color: #555; font-weight: bold; margin-bottom: 15px;"></p>
-                <p id="heroDesc" style="line-height: 1.6; background-color: #fce4ec; padding: 20px; border-radius: 8px; text-align: left;"></p>
-                <button type="button" onclick="restartQuiz()" style="background-color: #757575; margin-top: 30px;">重新测试</button>
+                <div class="hero-name" id="heroName"></div>
+                <div class="hero-tag" id="heroTag"></div>
+                <div class="hero-desc" id="heroDesc"></div>
+                <button type="button" onclick="restartQuiz()" style="background-color: #546e7a; margin-top: 30px;">重新测试</button>
             </div>
         </div>
 
@@ -217,68 +249,143 @@
 
     function calculateResult() {
         const form = document.getElementById('quizForm');
-        if (!form.q5.value) {
-            document.getElementById('error-5').style.display = 'block';
+        if (!form.q7.value) {
+            document.getElementById('error-7').style.display = 'block';
             return;
         }
 
-        document.getElementById('step-5').classList.remove('active');
+        // 隐藏最后一题，显示结果
+        document.getElementById('step-7').classList.remove('active');
         document.getElementById('step-result').classList.add('active');
 
-        let scores = {
-            'zhongyu': 0, 'weilvbu': 0, 'xuelingyun': 0, 'mouhuanggai': 0, 'xuyou': 0
+        // 获取所有答案
+        const ans = {
+            q1: form.q1.value, q2: form.q2.value, q3: form.q3.value,
+            q4: form.q4.value, q5: form.q5.value, q6: form.q6.value, q7: form.q7.value
         };
 
-        // 统计5道题的得分
-        for (let i = 1; i <= 5; i++) {
-            let answer = form['q' + i].value;
-            if (answer) scores[answer]++;
+        // --- 1. 检查隐藏触发通道 ---
+        if (ans.q3 === 'A') {
+            showResult('mouhuanggai'); return; // 零氪
+        }
+        if (ans.q3 === 'C') {
+            showResult('wuzhugeliang'); return; // 重氪
+        }
+        if (ans.q4 === 'C') {
+            showResult('chengui'); return; // 搞心态
         }
 
-        let maxScore = 0;
-        let topHero = '';
-        for (let hero in scores) {
-            if (scores[hero] > maxScore) {
-                maxScore = scores[hero];
-                topHero = hero;
+        // --- 2. 常规计分逻辑 ---
+        // 维度初始化
+        let dim = { fan:0, jian:0, bao:0, gou:0, yun:0, wen:0, du:0, tuan:0, yang:0, qiang:0 };
+
+        // Q1
+        if(ans.q1==='A') { dim.qiang++; dim.jian++; }
+        if(ans.q1==='B') { dim.gou++; dim.wen++; }
+        if(ans.q1==='C') { dim.fan++; dim.yang++; }
+        // Q2
+        if(ans.q2==='A') { dim.jian++; dim.bao++; }
+        if(ans.q2==='B') { dim.fan++; dim.yun++; }
+        if(ans.q2==='C') { dim.wen++; dim.gou++; }
+        // Q3 (B选项计分，A和C已拦截)
+        if(ans.q3==='B') { dim.wen++; }
+        // Q4 (A和B计分，C已拦截)
+        if(ans.q4==='A') { dim.du++; dim.bao++; }
+        if(ans.q4==='B') { dim.tuan++; }
+        // Q5
+        if(ans.q5==='A') { dim.bao++; dim.qiang++; }
+        if(ans.q5==='B') { dim.gou++; dim.yang++; }
+        if(ans.q5==='C') { dim.yun++; }
+        // Q6
+        if(ans.q6==='A') { dim.du++; }
+        if(ans.q6==='B') { dim.tuan++; dim.fan++; }
+        if(ans.q6==='C') { dim.du++; dim.jian++; }
+        // Q7
+        if(ans.q7==='A') { dim.jian++; dim.wen++; }
+        if(ans.q7==='B') { dim.fan++; dim.wen++; }
+        if(ans.q7==='C') { dim.yun++; }
+
+        // --- 3. 计算各个常规武将的契合度得分 ---
+        let heroScores = {
+            'zhongyu': dim.fan + dim.wen,             // 钟毓 (繁+稳)
+            'weilvbu': dim.jian + dim.bao + dim.qiang, // 威吕布 (简+爆+抢)
+            'xujing': dim.fan + dim.yun + dim.du,      // 许靖 (繁+运+独)
+            'caojinyu': dim.gou + dim.yang,            // 曹金玉 (苟+养)
+            'caopi': dim.tuan + dim.wen,               // 曹丕 (团+稳)
+            'xuelingyun': dim.gou + dim.jian           // 薛灵芸 (苟+简)
+        };
+
+        // 找出最高分的武将
+        let maxScore = -1;
+        let finalHero = '';
+        for (let hero in heroScores) {
+            if (heroScores[hero] > maxScore) {
+                maxScore = heroScores[hero];
+                finalHero = hero;
             }
         }
 
-        let heroNameText = "";
-        let heroTagText = "";
-        let heroDescText = "";
+        showResult(finalHero);
+    }
 
-        switch(topHero) {
+    // 显示最终结果的函数
+    function showResult(heroCode) {
+        let name = "", tag = "", desc = "";
+
+        switch(heroCode) {
+            // --- 隐藏武将 ---
+            case 'mouhuanggai':
+                name = "谋黄盖 / 陈祗";
+                tag = "【零氪平民战神】";
+                desc = "你坚信技术大于充钱！你对那些花里胡哨的祈福将嗤之以鼻，喜欢用最平民的武将打出最爆炸的效果。在你的手里，谋黄盖的一刀或者陈祗的爆发，足以让那些充了几万块的大佬瑟瑟发抖。";
+                break;
+            case 'wuzhugeliang':
+                name = "武诸葛亮";
+                tag = "【重氪祈福大佬】 ";
+                desc = "“充钱就能变强”是你的座右铭！你不喜欢受委屈，只要武将够强，直接拉满。你享受那种用超模技能和豪华特效碾压全场的快感。对你来说，三国杀不仅是卡牌游戏，更是实力的象征。";
+                break;
+            case 'chengui':
+                name = "陈珪 / 庞宏";
+                tag = "【搞心态折磨王】";
+                desc = "你的快乐建立在别人的痛苦之上！输赢对你来说可能没那么重要，但一定要把对面的心态搞崩。你极其擅长恶心人，烧条、扒装备、强迫选择，只要对面玩得不爽，这把游戏你就已经赢了！";
+                break;
+            
+            // --- 常规武将 ---
             case 'zhongyu':
-                heroNameText = "钟毓";
-                heroTagText = "【操作拉满 · 细节狂魔】";
-                heroDescText = "你是一个极具操作天赋的玩家！你不喜欢无脑互砍，而是享受通过复杂的技能联动、精准的计算来建立优势。在别人眼里繁琐的操作，在你手里就是华丽的艺术。只要给你操作空间，你就能秀翻全场！";
+                name = "钟毓";
+                tag = "【操作拉满的微操大师】";
+                desc = "你是一个极具操作天赋的玩家！你不喜欢无脑互砍，而是喜欢动脑子，靠复杂的技能联动和稳定的印卡来建立优势。在别人眼里繁琐的操作，在你手里就是华丽的艺术。";
                 break;
             case 'weilvbu':
-                heroNameText = "威吕布";
-                heroTagText = "【简单粗暴 · 纯碾压】";
-                heroDescText = "花里胡哨？不存在的！你信奉“大力出奇迹”，喜欢最直接、最暴力的输出方式。你不需要复杂的思考，只要面板够硬、伤害够高，一路平推过去就完事了。一力降十会，你就是战场上的推土机！";
+                name = "神吕布";
+                tag = "【简单粗暴的推土机】";
+                desc = "花里胡哨？不存在的！你信奉大力出奇迹，不服就是干。你不需要复杂的思考，只要面板够硬、伤害够高，一路平推过去就完事了。至于队友，有22血的队友给过牌那就好了！";
+                break;
+            case 'xujing':
+                name = "许靖";
+                tag = "【疯狂过牌机】";
+                desc = "“我的回合，还是我的回合！”你是一个极度依赖资源和手牌的玩家。你享受通过技能不断摸牌、洗牌、控场的快感。只要牌不断，你就是场上唯一的神，全场只能静静看你表演。";
+                break;
+            case 'caojinyu':
+                name = "曹金玉";
+                tag = "【隐忍觉醒的后期大核】";
+                desc = "你极具耐心，是个大心脏玩家。前期你唯唯诺诺，挨打受气也不吭声，只为了默默积攒资源。一旦让你苟到后期完成觉醒，你就会重拳出击，享受那种逆风翻盘、接管比赛的极致快感。";
+                break;
+            case 'caopi':
+                name = "曹丕";
+                tag = "【掌控全局的团队核心】";
+                desc = "你拥有极局观，是天生的领导者。你喜欢打配合，懂得如何通过包养队友、调度资源和限制敌人来拿下胜利。无论强度如何变化，机制总是无敌的。";
                 break;
             case 'xuelingyun':
-                heroNameText = "薛灵芸";
-                heroTagText = "【究极扭扭怪 · 搞心态大师】";
-                heroDescText = "你的游戏风格主打一个“灵动”和“折磨”。你非常享受在敌人的攻击中穿梭自如，你擅长拉扯和消耗，能在不知不觉中搞崩对手的心态，是让人又爱又恨的存在。";
-                break;
-            case 'mouhuanggai':
-                heroNameText = "谋黄盖";
-                heroTagText = "【一刀999 · 极致爆发】";
-                heroDescText = "你有一颗大心脏，追求高风险高回报的刺激感！你不喜欢温水煮青蛙，而是喜欢隐忍蓄力，然后在最关键的时刻爆发出毁天灭地的伤害。对你来说，游戏最大的乐趣就是看着敌人的血条瞬间清空的快感！";
-                break;
-            case 'xuyou':
-                heroNameText = "武陆逊";
-                heroTagText = "【疯狂过牌】";
-                heroDescText = "“我的回合，还是我的回合！”你是一个极度依赖资源和手牌的玩家。你享受通过技能不断摸牌、洗牌、控场的快感。当你启动的时候，全场只能静静地看着你表演。只要牌不断，你就是无敌的！";
+                name = "薛灵芸";
+                tag = "【极致拉扯】";
+                desc = "你的游戏风格主打一个折磨和拉扯。你打不死，也没有爆发的能力。你擅长利用防御和回复机制，在敌人的攻击中穿梭自如，慢慢耗尽对面的耐心和手牌，最终赢下胜利。";
                 break;
         }
 
-        document.getElementById('heroName').innerText = heroNameText;
-        document.getElementById('heroTag').innerText = heroTagText;
-        document.getElementById('heroDesc').innerText = heroDescText;
+        document.getElementById('heroName').innerText = name;
+        document.getElementById('heroTag').innerText = tag;
+        document.getElementById('heroDesc').innerText = desc;
     }
 
     function restartQuiz() {
