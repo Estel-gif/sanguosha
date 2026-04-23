@@ -18,34 +18,46 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            min-height: 300px; /* 保证框框有一个基础高度，不会忽大忽小 */
         }
         h1 {
             text-align: center;
-            color: #b22222; /* 暗红色，有点三国的感觉 */
+            color: #b22222;
         }
-        .question {
-            margin-bottom: 20px;
+        
+        /* 新增：用来控制页面的显示和隐藏 */
+        .page-step {
+            display: none; /* 默认隐藏所有步骤 */
         }
-        .question p {
+        .page-step.active {
+            display: block; /* 只显示带有 active 类的步骤 */
+        }
+
+        .question-title {
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1.2em;
+            margin-bottom: 20px;
         }
         .options label {
             display: block;
-            margin-bottom: 10px;
-            padding: 10px;
+            margin-bottom: 12px;
+            padding: 15px;
             background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            border: 2px solid #eee;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
         }
         .options label:hover {
             background-color: #e9e9e9;
+            border-color: #ccc;
         }
-        input[type="radio"] {
-            margin-right: 10px;
+        /* 当选中某个选项时，给它加个红框，更醒目 */
+        .options input[type="radio"]:checked + span {
+            font-weight: bold;
+            color: #b22222;
         }
+        
         button {
             display: block;
             width: 100%;
@@ -56,100 +68,162 @@
             border-radius: 5px;
             font-size: 1.2em;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 25px;
         }
         button:hover {
             background-color: #8b1a1a;
         }
+        
+        /* 错误提示文字的样式 */
+        .error-msg {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 10px;
+            display: none; /* 默认隐藏 */
+        }
+
         #result {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #fff8dc;
-            border-left: 5px solid #b22222;
-            display: none; /* 初始隐藏结果 */
+            text-align: center;
         }
         #result h2 {
-            margin-top: 0;
             color: #b22222;
+        }
+        .progress {
+            text-align: right;
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>你最像哪个三国杀武将？</h1>
+    <h1>三国杀性格测试</h1>
     
     <form id="quizForm">
+        
+        <!-- 欢迎页 (第0步) -->
+        <div id="step-0" class="page-step active">
+            <p style="text-align: center; font-size: 1.1em; line-height: 1.6;">
+                乱世之中，群雄逐鹿。<br>
+                如果穿越回三国，你会是哪位叱咤风云的武将？<br>
+                完成以下3个问题，揭晓你的专属武将身份！
+            </p>
+            <button type="button" onclick="nextStep(0, 1)">开始测试</button>
+        </div>
+
         <!-- 第1题 -->
-        <div class="question">
-            <p>1. 面对比你强大的敌人，你的第一反应是？</p>
+        <div id="step-1" class="page-step">
+            <div class="progress">1 / 3</div>
+            <div class="question-title">1. 面对比你强大的敌人，你的第一反应是？</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="zhangfei"> A. 废话少说，直接冲上去干！</label>
-                <label><input type="radio" name="q1" value="zhugeliang"> B. 冷静分析，寻找敌人的弱点智取。</label>
-                <label><input type="radio" name="q1" value="simayi"> C. 暂避锋芒，默默发育，等他露出破绽。</label>
-                <label><input type="radio" name="q1" value="sunquan"> D. 敌人的敌人就是朋友，赶紧找人结盟。</label>
+                <label><input type="radio" name="q1" value="zhangfei"> <span>A. 废话少说，直接冲上去干！</span></label>
+                <label><input type="radio" name="q1" value="zhugeliang"> <span>B. 冷静分析，寻找敌人的弱点智取。</span></label>
+                <label><input type="radio" name="q1" value="simayi"> <span>C. 暂避锋芒，默默发育，等他露出破绽。</span></label>
+                <label><input type="radio" name="q1" value="sunquan"> <span>D. 敌人的敌人就是朋友，赶紧找人结盟。</span></label>
             </div>
+            <p id="error-1" class="error-msg">请先选择一个答案哦！</p>
+            <button type="button" onclick="nextStep(1, 2)">下一题</button>
         </div>
 
         <!-- 第2题 -->
-        <div class="question">
-            <p>2. 在一个团队中，你通常扮演什么角色？</p>
+        <div id="step-2" class="page-step">
+            <div class="progress">2 / 3</div>
+            <div class="question-title">2. 在一个团队中，你通常扮演什么角色？</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="caocao"> A. 绝对的领导者，发号施令。</label>
-                <label><input type="radio" name="q2" value="zhaoyun"> B. 靠谱的执行者，指哪打哪，绝不掉链子。</label>
-                <label><input type="radio" name="q2" value="guojia"> C. 军师/智囊，经常提出意想不到的好点子。</label>
-                <label><input type="radio" name="q2" value="liubei"> D. 润滑剂，擅长凝聚人心，让大家团结一致。</label>
+                <label><input type="radio" name="q2" value="caocao"> <span>A. 绝对的领导者，发号施令。</span></label>
+                <label><input type="radio" name="q2" value="zhaoyun"> <span>B. 靠谱的执行者，指哪打哪，绝不掉链子。</span></label>
+                <label><input type="radio" name="q2" value="guojia"> <span>C. 军师/智囊，经常提出意想不到的好点子。</span></label>
+                <label><input type="radio" name="q2" value="liubei"> <span>D. 润滑剂，擅长凝聚人心，让大家团结一致。</span></label>
             </div>
+            <p id="error-2" class="error-msg">请先选择一个答案哦！</p>
+            <button type="button" onclick="nextStep(2, 3)">下一题</button>
         </div>
 
         <!-- 第3题 -->
-        <div class="question">
-            <p>3. 你最看重以下哪种品质？</p>
+        <div id="step-3" class="page-step">
+            <div class="progress">3 / 3</div>
+            <div class="question-title">3. 你最看重以下哪种品质？</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="guanyu"> A. 忠诚与义气</label>
-                <label><input type="radio" name="q3" value="caocao"> B. 能力与霸业</label>
-                <label><input type="radio" name="q3" value="zhugeliang"> C. 智慧与谨慎</label>
-                <label><input type="radio" name="q3" value="simayi"> D. 隐忍与最终的胜利</label>
+                <label><input type="radio" name="q3" value="guanyu"> <span>A. 忠诚与义气</span></label>
+                <label><input type="radio" name="q3" value="caocao"> <span>B. 能力与霸业</span></label>
+                <label><input type="radio" name="q3" value="zhugeliang"> <span>C. 智慧与谨慎</span></label>
+                <label><input type="radio" name="q3" value="simayi"> <span>D. 隐忍与最终的胜利</span></label>
+            </div>
+            <p id="error-3" class="error-msg">请先选择一个答案哦！</p>
+            <button type="button" onclick="calculateResult()">查看测试结果</button>
+        </div>
+
+        <!-- 结果页 -->
+        <div id="step-result" class="page-step">
+            <div id="result">
+                <h2>你的三国杀化身是：</h2>
+                <p id="heroName" style="font-size: 1.8em; font-weight: bold; color: #b22222; margin: 10px 0;"></p>
+                <p id="heroDesc" style="line-height: 1.6; background-color: #fff8dc; padding: 15px; border-radius: 8px;"></p>
+                <button type="button" onclick="restartQuiz()" style="background-color: #555;">重新测试</button>
             </div>
         </div>
 
-        <button type="button" onclick="calculateResult()">查看测试结果</button>
     </form>
-
-    <div id="result">
-        <h2>测试结果：</h2>
-        <p id="heroName" style="font-size: 1.5em; font-weight: bold;"></p>
-        <p id="heroDesc"></p>
-    </div>
 </div>
 
 <script>
-    // 这是一个简单的计分逻辑，每个选项对应一个武将的得分
+    // 这个函数负责“翻页”
+    function nextStep(currentStep, nextStep) {
+        // 如果不是从欢迎页(0)跳转，就需要检查有没有做题
+        if (currentStep > 0) {
+            const form = document.getElementById('quizForm');
+            // 获取当前题目选中的值
+            const selected = form['q' + currentStep].value;
+            
+            // 如果没选，显示错误提示并停止翻页
+            if (!selected) {
+                document.getElementById('error-' + currentStep).style.display = 'block';
+                return;
+            } else {
+                // 如果选了，隐藏错误提示
+                document.getElementById('error-' + currentStep).style.display = 'none';
+            }
+        }
+
+        // 把当前这一页隐藏 (去掉 active 类)
+        document.getElementById('step-' + currentStep).classList.remove('active');
+        // 把下一页显示出来 (加上 active 类)
+        document.getElementById('step-' + nextStep).classList.add('active');
+    }
+
+    // 计算结果
     function calculateResult() {
-        // 获取表单数据
         const form = document.getElementById('quizForm');
-        const q1 = form.q1.value;
-        const q2 = form.q2.value;
         const q3 = form.q3.value;
 
-        // 检查是否所有题目都答了
-        if (!q1 || !q2 || !q3) {
-            alert("请回答完所有问题再提交哦！");
+        // 检查最后一题有没有做
+        if (!q3) {
+            document.getElementById('error-3').style.display = 'block';
             return;
         }
 
-        // 初始化武将得分
+        // 隐藏第3题，显示结果页
+        document.getElementById('step-3').classList.remove('active');
+        document.getElementById('step-result').classList.add('active');
+
+        // 获取所有答案
+        const q1 = form.q1.value;
+        const q2 = form.q2.value;
+
+        // 初始化得分
         let scores = {
             'zhangfei': 0, 'zhugeliang': 0, 'simayi': 0, 'sunquan': 0,
             'caocao': 0, 'zhaoyun': 0, 'guojia': 0, 'liubei': 0, 'guanyu': 0
         };
 
-        // 根据选择加分
+        // 计分
         scores[q1]++;
         scores[q2]++;
         scores[q3]++;
 
-        // 找出得分最高的武将
+        // 找最高分
         let maxScore = 0;
         let topHero = '';
         for (let hero in scores) {
@@ -159,11 +233,10 @@
             }
         }
 
-        // 准备结果文案
+        // 匹配文案
         let heroNameText = "";
         let heroDescText = "";
 
-        // 根据得分最高的武将给出评价 (这里为了简单，把可能出现的最高分武将写出来)
         switch(topHero) {
             case 'caocao':
                 heroNameText = "曹操 - 乱世之奸雄";
@@ -197,10 +270,18 @@
                 heroDescText = "你的性格非常独特，融合了多位三国英豪的特点！";
         }
 
-        // 将结果显示在网页上
+        // 渲染到页面
         document.getElementById('heroName').innerText = heroNameText;
         document.getElementById('heroDesc').innerText = heroDescText;
-        document.getElementById('result').style.display = 'block'; // 显示结果框
+    }
+
+    // 重新测试功能
+    function restartQuiz() {
+        // 清空表单选择
+        document.getElementById('quizForm').reset();
+        // 隐藏结果页，回到欢迎页
+        document.getElementById('step-result').classList.remove('active');
+        document.getElementById('step-0').classList.add('active');
     }
 </script>
 
